@@ -53,7 +53,7 @@ typedef unsigned char xbool;
  *                      is the index of the chosen option+1, so it begins at one
  *                      and carries on, with the second option being 2 etc. the
  *                      value 0 is returned upon error or through the -h option.
- *                      the actual option string is the one after this one.
+ *                      the actual option string is the argument after this one.
  * -n, --nooptions      hide the options printed at the end of the question
  * -h, --help           display the usage message, along with option
  *                      definitions.
