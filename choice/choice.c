@@ -1,3 +1,34 @@
+/* choice.c
+ *
+ * this is a simple program, designed to be run from the command line and used
+ * mainly in shell scripts. it presents the user with a string and a set of
+ * options, and return the index of the option they select.
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Joe Glancy
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+// v0.1.0
+
 #include <stdio.h>
 #include <string.h>
 #include <termios.h>
@@ -8,12 +39,11 @@
 typedef unsigned int uint;
 typedef unsigned char xbool;
 
-// badly written comment below, I'll reword it later.
-/* this is a simple program, designed to be run from the command line and used
- * mainly in shell scripts. it presents the user with a question and a set of
- * options, and return the index of the one (option) they select.
+/* badly written comment below, I'll reword it later. also need to settle on
+ * whether they're called options or choices.
  *
- * usage: choice [-c choices] [-n] [-C] text
+ *
+ * usage: choice [-c choices] [-n] text
  *
  * options:
  * -c, --choices        this is a single string which defines the choices
@@ -32,9 +62,9 @@ typedef unsigned char xbool;
  */
 
 #ifdef USE_FORMATTING
-char *usage = "usage: \e[1m%s [-c choices] [-n] [-C] text\e[0m\n";
+char *usage = "usage: \e[1m%s [-c choices] [-n] text\e[0m\n";
 #else
-char *usage = "usage: %s [-c choices] [-n] [-C] text\n";
+char *usage = "usage: %s [-c choices] [-n] text\n";
 #endif
 char *help = "options:\n\
  -c, --choices          list of characters the user can choose from. if none\n\
@@ -49,8 +79,8 @@ int textindex = 0;
 xbool nooptions = 0;
 
 /* initially I was going to create both my own strlen and strcmp to make the
- * resulting executable (hopefully) ever so slightly smaller. so far, I only
- * have an strlen.
+ * resulting executable (hopefully) ever so slightly smaller as then I wouldn't
+ * need string.h. so far, I only have xstrlen.
  */
 uint xstrlen(char *str) {
     char *ptr = str;
